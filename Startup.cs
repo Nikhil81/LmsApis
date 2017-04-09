@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using TodoApi.Models;
+using TodoApi.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Projects
 {
@@ -27,8 +30,11 @@ namespace Projects
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<TodoContext>(_ => _.UseInMemoryDatabase());
             // Add framework services.
             services.AddMvc();
+            //dependency injection 
+            services.AddScoped<ITodoRepository, TodoRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
